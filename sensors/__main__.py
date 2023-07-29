@@ -8,7 +8,7 @@ def main():
             for data in meausure(dht_device):
                 client.publish(
                     "sensors/temperature",
-                    data.serialize(),
+                    payload=data.serialize(),
                 )
 
 

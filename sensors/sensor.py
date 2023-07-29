@@ -8,10 +8,11 @@ from typing import Generator
 import board
 from adafruit_blinka.microcontroller.generic_linux.libgpiod_pin import Pin
 from adafruit_dht import DHT22
+from tenacity import retry, retry_if_exception_type
 
 
 @contextmanager
-def get_dht_device(pin: Pin = board.D18) -> Generator[DHT22, None, None]:
+def get_dht_device(pin: Pin = board.D22) -> Generator[DHT22, None, None]:
     dht_device = DHT22(pin)
 
     yield dht_device
@@ -29,20 +30,15 @@ class Measurement:
         return json.dumps(self.__dict__)
 
 
+@retry(retry=retry_if_exception_type(RuntimeError), wait=2)
 def meausure(
     dht_device: DHT22,
     *,
     wait_inteval: int = 60,
-    retry_interval: int = 2,
 ) -> Generator[Measurement, None, None]:
     while True:
-        _wait_interval = wait_inteval
-        try:
-            yield Measurement(
-                temperature=dht_device.temperature,
-                humidity=dht_device.humidity,
-            )
-        except RuntimeError:
-            _wait_interval = retry_interval
-
-        time.sleep(_wait_interval)
+        yield Measurement(
+            temperature=dht_device.temperature,
+            humidity=dht_device.humidity,
+        )
+        time.sleep(wait_inteval)
