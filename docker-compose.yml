@@ -7,10 +7,4 @@ services:
       - 127.0.0.1:1883:1883
     volumes:
       - ./mosquitto/config:/mosquitto/config
-    networks:
-      - mosquitto
-
-networks:
-    mosquitto:
-        name: mosquitto
-        driver: bridge
+  
