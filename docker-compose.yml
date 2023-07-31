@@ -1,10 +1,22 @@
 version: "3.8"
 
 services:
-  mosquitto:
-    image: eclipse-mosquitto:2
-    expose:
-      - 127.0.0.1:1883:1883
+
+  rabbitmq_mqtt:
+    build: ./rabbitmq_mqtt
+    ports:
+      - "1883:1883"
+      - "5672:5672"
+      - "15672:15672"
     volumes:
-      - ./mosquitto/config:/mosquitto/config
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+       
+
+
+  # mosquitto:
+  #   image: eclipse-mosquitto:2
+  #   port:
+  #     - 1883:1883
+  #   volumes:
+  #     - ./mosquitto/config:/mosquitto/config
   
