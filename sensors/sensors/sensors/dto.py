@@ -1,15 +1,17 @@
+"""Definition of Data Transfer Object."""
+
 from datetime import datetime, timezone
 
 from pydantic import BaseModel, Field
 
 
 class Metadata(BaseModel):
-    sensor_id: int = 1
+    sensor_id: int = Field(default=1, alias="sensorId")
 
 
 class DataPoint(BaseModel):
     metadata: Metadata = Field(default_factory=Metadata)
-    temperature: int = 20
+    temperature: int
     timestamp: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
     )

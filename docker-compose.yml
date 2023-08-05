@@ -1,12 +1,14 @@
 version: "3.8"
 
 services:
-
   rabbitmq_mqtt:
     build: ./rabbitmq_mqtt
     ports:
       - "1883:1883"
       - "5672:5672"
       - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=mqtt
+      - RABBITMQ_DEFAULT_PASS=mqtt
     volumes:
-      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./rabbitmq_mqtt/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
