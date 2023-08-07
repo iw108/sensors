@@ -1,6 +1,15 @@
 version: "3.8"
 
 services:
+  subscriber:
+    build: ./sensors
+    environment:
+      - RABBITMQ_URI=amqp://mqtt:mqtt@rabbitmq_mqtt/
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq_mqtt
+
   rabbitmq_mqtt:
     build: ./rabbitmq_mqtt
     ports:
