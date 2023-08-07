@@ -1,0 +1,10 @@
+profiles:
+  nano_iot:
+    fqbn: arduino:samd:nano_33_iot
+    platforms:
+      - platform: arduino:samd (1.8.13)
+    libraries:
+      - ArduinoMqttClient (0.1.7)
+      - ArduinoJson (6.23.1)
+      - DHT sensor library (1.4.4)
+      - WiFiNINA (1.18.14)
