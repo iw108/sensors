@@ -1,17 +1,19 @@
 """Definition of settings."""
 
-from pydantic import AnyUrl
+from pydantic import AnyHttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     RABBITMQ_URI: str
-    ATLAS_URI: AnyUrl
+    RABBITMQ_MQTT_EXCHANGE: str = "mqtt"
 
-    DATABASE_NAME: str = "sensors"
-    COLLECTION_NAME: str = "temperature"
+    INFLUXDB_BUCKET: str
+    INFLUXDB_ORG: str
+    INFLUXDB_TOKEN: str
+    INFLUXDB_URL: AnyHttpUrl
 
     model_config = SettingsConfigDict(
-        env_file='.env', 
-        env_file_encoding='utf-8',
+        env_file=".env",
+        env_file_encoding="utf-8",
     )
