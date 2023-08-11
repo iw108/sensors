@@ -1,6 +1,5 @@
 """Script for subscribing to MQTT topic."""
 
-
 from config import Settings
 from paho.mqtt.client import Client, MQTTMessage
 
