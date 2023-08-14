@@ -10,6 +10,7 @@ from .settings import Settings
 
 
 async def main(*, _settings: Settings | None = None):
+    """Run publisher."""
     settings = _settings or Settings()
 
     connection = await aio_pika.connect_robust(settings.RABBITMQ_URI)
@@ -22,7 +23,8 @@ async def main(*, _settings: Settings | None = None):
 
     async with connection, influxdb_client:
         message_handler = MessageHandler(
-            write_api=influxdb_client.write_api(), bucket=settings.INFLUXDB_BUCKET
+            write_api=influxdb_client.write_api(),
+            bucket=settings.INFLUXDB_BUCKET,
         )
 
         channel = await connection.channel()

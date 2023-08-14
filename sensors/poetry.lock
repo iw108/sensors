@@ -688,20 +688,6 @@ files = [
 ]
 
 [[package]]
-name = "paho-mqtt"
-version = "1.6.1"
-description = "MQTT version 5.0/3.1.1 client class"
-category = "dev"
-optional = false
-python-versions = "*"
-files = [
-    {file = "paho-mqtt-1.6.1.tar.gz", hash = "sha256:2a8291c81623aec00372b5a85558a372c747cbca8e9934dfe218638b8eefc26f"},
-]
-
-[package.extras]
-proxy = ["PySocks"]
-
-[[package]]
 name = "pamqp"
 version = "3.2.1"
 description = "RabbitMQ Focused AMQP low-level library"
@@ -896,6 +882,24 @@ pydantic = ">=2.0.1"
 python-dotenv = ">=0.21.0"
 
 [[package]]
+name = "pydocstyle"
+version = "6.3.0"
+description = "Python docstring style checker"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pydocstyle-6.3.0-py3-none-any.whl", hash = "sha256:118762d452a49d6b05e194ef344a55822987a462831ade91ec5c06fd2169d019"},
+    {file = "pydocstyle-6.3.0.tar.gz", hash = "sha256:7ce43f0c0ac87b07494eb9c0b462c0b73e6ff276807f204d6b53edc72b7e44e1"},
+]
+
+[package.dependencies]
+snowballstemmer = ">=2.2.0"
+
+[package.extras]
+toml = ["tomli (>=1.2.3)"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -970,6 +974,18 @@ files = [
 ]
 
 [[package]]
+name = "snowballstemmer"
+version = "2.2.0"
+description = "This package provides 29 stemmers for 28 languages generated from Snowball algorithms."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "snowballstemmer-2.2.0-py2.py3-none-any.whl", hash = "sha256:c8e1716e83cc398ae16824e5572ae04e0d9fc2c6b985fb0f900f5f0c96ecba1a"},
+    {file = "snowballstemmer-2.2.0.tar.gz", hash = "sha256:09b16deb8547d3412ad7b590689584cd0fe25ec8db3be37788be3810cbf19cb1"},
+]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -995,18 +1011,6 @@ files = [
 
 [package.dependencies]
 types-urllib3 = "*"
-
-[[package]]
-name = "types-paho-mqtt"
-version = "1.6.0.6"
-description = "Typing stubs for paho-mqtt"
-category = "dev"
-optional = false
-python-versions = "*"
-files = [
-    {file = "types-paho-mqtt-1.6.0.6.tar.gz", hash = "sha256:c2c263ee33010b23b2c53c1a6c4b4515ba6f94e8fa391e969c0e8cdd0256de49"},
-    {file = "types_paho_mqtt-1.6.0.6-py3-none-any.whl", hash = "sha256:c1314b3571fe7699f5e545f83c860a9a1edb885237649afe243dd0aca2f0d725"},
-]
 
 [[package]]
 name = "types-urllib3"
@@ -1141,4 +1145,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "bf600026ba59c483c48857885679983852ae05a4bd5b825427c7aa465d12ce37"
+content-hash = "db26d35d00d2b8741f9aefe8cc657f95ea7c010a5012fd6a86de53367141bc3f"

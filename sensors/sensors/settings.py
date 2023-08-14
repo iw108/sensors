@@ -5,6 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    """Settings required for subscriber."""
+
     RABBITMQ_URI: str
     RABBITMQ_MQTT_EXCHANGE: str = "mqtt"
 
