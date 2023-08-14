@@ -1,9 +1,12 @@
 """Definition of RabbitMQ message handler."""
+import logging
 
 from aio_pika.message import AbstractIncomingMessage
 from influxdb_client.client.write_api_async import WriteApiAsync
 
 from .dto import DataPoint
+
+LOGGER = logging.getLogger(__name__)
 
 
 class MessageHandler:
@@ -29,6 +32,8 @@ class MessageHandler:
             message: Incoming message.
 
         """
+        LOGGER.debug("Processing message")
+
         async with message.process():
             data_point = DataPoint.model_validate_json(message.body)
 

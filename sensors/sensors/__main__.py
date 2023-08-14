@@ -1,12 +1,23 @@
 """Script for subscribing to MQTT topic via RabbitMQ."""
 
 import asyncio
+import logging
+import logging.config
+from pathlib import Path
 
 import aio_pika
 from influxdb_client.client.influxdb_client_async import InfluxDBClientAsync
 
 from .message_handler import MessageHandler
 from .settings import Settings
+
+logging.config.fileConfig(
+    Path(__file__).parent / "logging.conf",
+    disable_existing_loggers=False,
+)
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 async def main(*, _settings: Settings | None = None):
