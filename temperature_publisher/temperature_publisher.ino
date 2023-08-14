@@ -38,7 +38,7 @@ void setup() {
     delay(5000);
   }
 
-  Serial.println(" Connected to network"); 
+  Serial.println("Connected to network"); 
   Serial.println();
 
   // Connect to mqtt broker
@@ -53,8 +53,10 @@ void setup() {
   Serial.println("Connected to the MQTT broker");
   Serial.println();
 
-  // Initialise sensor
+  // Initialize sensor
+  Serial.println("Initializing DHT sensor");
   dht.begin();
+  Serial.println("Initialized DHT sensor");
 
 }
 
@@ -63,19 +65,18 @@ void loop() {
 
   mqttClient.poll();
 
-  float temperature = 30;
-
-  Serial.print("Temperature: ");
+  Serial.print("Reading temperature: ");
+  float temperature = dht.readTemperature();
   Serial.println(temperature);
 
   // Send measurement via MQTT.
-  Serial.println("Sending MQTT message.");
+  Serial.println("Publishing MQTT message.");
 
   mqttClient.beginMessage(topic);
-  serializeJson(getPayload(30), mqttClient);
+  serializeJson(getPayload(temperature), mqttClient);
   mqttClient.endMessage();
 
-  Serial.println("Sent MQQT message.");
+  Serial.println("Published MQTT message.");
 
   // Once a minute
   delay(interval);
