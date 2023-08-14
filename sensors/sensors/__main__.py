@@ -4,6 +4,7 @@ import asyncio
 import logging
 import logging.config
 from pathlib import Path
+from signal import SIGINT
 
 import aio_pika
 from influxdb_client.client.influxdb_client_async import InfluxDBClientAsync
@@ -20,8 +21,21 @@ logging.config.fileConfig(
 LOGGER = logging.getLogger(__name__)
 
 
-async def main(*, _settings: Settings | None = None):
-    """Run publisher."""
+def _get_future(_loop: asyncio.AbstractEventLoop | None = None) -> asyncio.Future:
+    future = asyncio.Future()
+
+    loop = _loop or asyncio.get_event_loop()
+    loop.add_signal_handler(SIGINT, lambda: future.set_result(True))
+
+    return future
+
+
+async def subscriber(
+    *,
+    _settings: Settings | None = None,
+    _future: asyncio.Future | None = None,
+):
+    """Subscriber."""
     settings = _settings or Settings()
 
     connection = await aio_pika.connect_robust(settings.RABBITMQ_URI)
@@ -55,8 +69,8 @@ async def main(*, _settings: Settings | None = None):
 
         await queue.consume(message_handler)
 
-        await asyncio.Future()
+        await (_future or _get_future())
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(subscriber())
