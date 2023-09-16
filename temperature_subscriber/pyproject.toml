@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "sensors"
+name = "temperature_subscriber"
 version = "0.1.0"
 description = ""
 authors = ["Isaac Williams <isaac.andrew.williams@gmail.com>"]

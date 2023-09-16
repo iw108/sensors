@@ -3,6 +3,7 @@ version: "3.8"
 services:
   subscriber:
     build: .
+    image: temperature_subscriber
     environment:
       - RABBITMQ_URI=amqp://mqtt:mqtt@rabbitmq/
       - INFLUXDB_URL=http://influxdb:8086
