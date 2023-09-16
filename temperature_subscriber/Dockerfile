@@ -28,6 +28,6 @@ WORKDIR /app
 
 COPY --from=builder ${VENV_PATH} ${VENV_PATH}
 
-COPY ./sensors /app/sensors
+COPY ./temperature_subscriber /app/temperature_subscriber
 
 ENTRYPOINT ["python", "-m", "temperature_subscriber"]

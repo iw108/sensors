@@ -6,8 +6,10 @@ import logging.config
 from contextlib import asynccontextmanager
 from pathlib import Path
 from signal import SIGINT
+from typing import AsyncGenerator
 
-import aio_pika
+from aio_pika import ExchangeType, connect_robust
+from aio_pika.abc import AbstractQueue
 from influxdb_client.client.influxdb_client_async import InfluxDBClientAsync
 
 from .message_handler import MessageHandler
@@ -21,7 +23,7 @@ logging.config.fileConfig(
 
 def _get_cancelation_event(
     _loop: asyncio.AbstractEventLoop | None = None,
-) -> asyncio.Future:
+) -> asyncio.Event:
     event = asyncio.Event()
 
     loop = _loop or asyncio.get_event_loop()
@@ -31,7 +33,9 @@ def _get_cancelation_event(
 
 
 @asynccontextmanager
-async def managed_message_handler(settings: Settings):
+async def managed_message_handler(
+    settings: Settings,
+) -> AsyncGenerator[MessageHandler, None]:
     influxdb_client = InfluxDBClientAsync(
         url=str(settings.INFLUXDB_URL),
         token=settings.INFLUXDB_TOKEN,
@@ -46,15 +50,17 @@ async def managed_message_handler(settings: Settings):
 
 
 @asynccontextmanager
-async def managed_queue(settings: Settings):
-    connection = await aio_pika.connect_robust(settings.RABBITMQ_URI)
+async def managed_queue(
+    settings: Settings,
+) -> AsyncGenerator[AbstractQueue, None]:
+    connection = await connect_robust(settings.RABBITMQ_URI)
 
     async with connection:
         channel = await connection.channel()
 
         mqtt_exchange = await channel.declare_exchange(
             name=settings.RABBITMQ_EXCHANGE_NAME,
-            type=aio_pika.ExchangeType.TOPIC,
+            type=ExchangeType.TOPIC,
             durable=True,
         )
 
