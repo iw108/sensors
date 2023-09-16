@@ -30,4 +30,4 @@ COPY --from=builder ${VENV_PATH} ${VENV_PATH}
 
 COPY ./sensors /app/sensors
 
-ENTRYPOINT ["python", "-m", "sensors"]
+ENTRYPOINT ["python", "-m", "temperature_subscriber"]

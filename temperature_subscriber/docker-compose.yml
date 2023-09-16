@@ -5,11 +5,12 @@ services:
     build: .
     image: temperature_subscriber
     environment:
-      - RABBITMQ_URI=amqp://mqtt:mqtt@rabbitmq/
       - INFLUXDB_URL=http://influxdb:8086
       - INFLUXDB_ORG
       - INFLUXDB_BUCKET
       - INFLUXDB_TOKEN
+      - RABBIT_MQTT_EXCHANGE
+      - RABBITMQ_URI=amqp://mqtt:mqtt@rabbitmq/
     depends_on:
       - rabbitmq
       - influxdb
@@ -23,6 +24,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=mqtt
       - RABBITMQ_DEFAULT_PASS=mqtt
+      - RABBITMQ_MQTT_EXCHANGE
 
   influxdb:
     image: influxdb:2.7

@@ -8,7 +8,9 @@ class Settings(BaseSettings):
     """Settings required for subscriber."""
 
     RABBITMQ_URI: str
-    RABBITMQ_MQTT_EXCHANGE: str = "mqtt"
+    RABBITMQ_EXCHANGE_NAME: str
+    RABBITMQ_QUEUE_NAME: str = "mqtt"
+    RABBITMQ_ROUTING_KEY: str = "sensors.temperature"
 
     INFLUXDB_BUCKET: str
     INFLUXDB_ORG: str

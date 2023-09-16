@@ -1,4 +1,5 @@
 """Definition of RabbitMQ message handler."""
+
 import logging
 
 from aio_pika.message import AbstractIncomingMessage
